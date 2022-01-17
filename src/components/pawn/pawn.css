@@ -1,0 +1,20 @@
+.pawn {
+    position: absolute;
+    background-color: blue;
+    border-radius: 100%;
+    border-color: darkblue;
+    /* border-width: 2px; */
+    border-style: solid;
+    height: 135px;
+    width: 135px;
+    /* filter: drop-shadow(0 0 0.15rem navy); */
+}
+
+hr {
+    border: none;
+    border-top: 1px dotted #f00;
+    color: #fff;
+    background-color: #fff;
+    height: 1px;
+    width: 50%;
+}

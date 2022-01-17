@@ -1,0 +1,14 @@
+.dotted-line{
+    height: 0px; 
+    border-top: 2px dashed white;
+    position: absolute; 
+}
+
+.length-label {
+    position: absolute;
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
