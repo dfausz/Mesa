@@ -2,6 +2,8 @@ import './pawn.css';
 import DragAndSnap from '../drag-and-snap/drag-and-snap';
 import { GetPawnDiameter } from '../../helpers/pawnHelper';
 
+
+/** @param {{size: "tiny"|"small"|"medium"|"large"|"huge"|"gargantuan"]}} props  */
 function Pawn(props) {
 
   const pawnDiameter = () => GetPawnDiameter(props.size);

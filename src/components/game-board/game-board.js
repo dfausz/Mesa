@@ -1,11 +1,18 @@
 import './game-board.css';
 import Pawn from '../pawn/pawn';
+import { webFrame } from 'electron';
 
 function GameBoard() {
-  return (
-    <div className="game-board">
+  function KeyDown(...all) {
+    console.log(all);
+  }
+
+  return ( 
+    <div className="game-board" onKeyDown={KeyDown}>
         <div className="grid">
-            <Pawn />
+            <Pawn size="tiny" />
+            <Pawn size="huge" />
+            <Pawn size="gargantuan" />
         </div>
     </div>
   );

@@ -1,16 +1,16 @@
 export function GetPawnDiameter(size) {
     switch(size){
         case "tiny":
-            return 22.5;
+            return 20;
         default:
         case "small":
         case "medium":
-            return 45;
+            return 40;
         case "large":
-            return 90;
+            return 80;
         case "huge":
-            return 135;
+            return 120;
         case "gargantuan":
-            return 180;
+            return 160;
     }
 }

@@ -1,5 +1,5 @@
 import Draggable from 'react-draggable';
-import { createRef, useState } from 'react';
+import { useState } from 'react';
 import './drag-and-snap.css';
 import DrawLine from '../draw-line/draw-line';
 import { GetPawnDiameter } from '../../helpers/pawnHelper';
@@ -8,17 +8,17 @@ export default function DragAndSnap(props) {
     var bonusOffset;
     switch(props.size){
         case "tiny":
-            bonusOffset = 10; break;
+            bonusOffset = 11; break;
             default:
         case "small":
         case "medium":
-            bonusOffset = 2; break;
-        case "large":
-            bonusOffset = 2; break;
-        case "huge":
             bonusOffset = 4; break;
+        case "large":
+            bonusOffset = 9; break;
+        case "huge":
+            bonusOffset = 14; break;
         case "gargantuan":
-            bonusOffset = 7; break;
+            bonusOffset = 19; break;
     }
 
     const [position, setPosition] = useState({x: bonusOffset, y: bonusOffset});
@@ -51,7 +51,8 @@ export default function DragAndSnap(props) {
     }
 
     function onStart(_, target){
-        setStartPoint({x: target.x + 25, y: target.y + 25});
+        var pawnRadius = GetPawnDiameter(props.size) / 2;
+        setStartPoint({x: target.x + pawnRadius, y: target.y + pawnRadius});
         setShowLine(true);
     }
     
@@ -63,10 +64,10 @@ export default function DragAndSnap(props) {
 
     return (
         <>
-            <DrawLine startPoint={startPoint} endPoint={endPoint} showLine={showLine} />
             <Draggable onStart={onStart} onDrag={onDrag} onStop={onStop} position={position}>
                 {props.children}
             </Draggable>
+            <DrawLine startPoint={startPoint} endPoint={endPoint} showLine={showLine} />
         </>
     );
 }
