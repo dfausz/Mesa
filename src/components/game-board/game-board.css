@@ -18,3 +18,14 @@
       repeating-linear-gradient(90deg, #fff 0 1px, transparent 1px 100%);
     background-size: 50px 50px;
 }
+
+.react-transform-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+  background-color: black;
+}
+
+.react-transform-component {
+  width: 100% !important;
+  height: 100% !important;
+}

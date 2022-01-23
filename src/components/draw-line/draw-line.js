@@ -44,7 +44,7 @@ function DrawLine(props) {
                 transform: "rotate(" + getAngle() + "deg)"
                 }} />
             <div className={"length-label " + (props.showLine ? "" : "hidden")} 
-                style={{top: props.startPoint.y, left:props.startPoint.x}}>
+                style={{top: props.endPoint.y, left:props.endPoint.x}}>
                 {Math.round(getLength()/10) + "ft"}
             </div>
         </>

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import './drag-and-snap.css';
 import DrawLine from '../draw-line/draw-line';
 import { GetPawnDiameter } from '../../helpers/pawnHelper';
+import { useSelector } from 'react-redux';
 
 export default function DragAndSnap(props) {
     var bonusOffset;
@@ -12,7 +13,7 @@ export default function DragAndSnap(props) {
             default:
         case "small":
         case "medium":
-            bonusOffset = 4; break;
+            bonusOffset = 2; break;
         case "large":
             bonusOffset = 9; break;
         case "huge":
@@ -20,6 +21,8 @@ export default function DragAndSnap(props) {
         case "gargantuan":
             bonusOffset = 19; break;
     }
+
+    const scale = useSelector((state) => state.transform.scale) 
 
     const [position, setPosition] = useState({x: bonusOffset, y: bonusOffset});
     const [startPoint, setStartPoint] = useState({x: 0, y: 0});
@@ -64,7 +67,7 @@ export default function DragAndSnap(props) {
 
     return (
         <>
-            <Draggable onStart={onStart} onDrag={onDrag} onStop={onStop} position={position}>
+            <Draggable onStart={onStart} onDrag={onDrag} onStop={onStop} position={position} scale={scale}>
                 {props.children}
             </Draggable>
             <DrawLine startPoint={startPoint} endPoint={endPoint} showLine={showLine} />
