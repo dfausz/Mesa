@@ -1,7 +1,6 @@
 .game-board {
-    height: 100%;
-    width: 100%;
-    background: url(clearing.jpg);
+  height: 100%;
+  width: 100%;
 }
 
 .test {
@@ -11,12 +10,13 @@
 }
 
 .grid {
-    height: 100%;
-    width: 100%;
-    background-image:
-      repeating-linear-gradient(#fff 0 1px, transparent 1px 100%),
-      repeating-linear-gradient(90deg, #fff 0 1px, transparent 1px 100%);
-    background-size: 50px 50px;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-image:
+    repeating-linear-gradient(#fff 0 1px, transparent 1px 100%),
+    repeating-linear-gradient(90deg, #fff 0 1px, transparent 1px 100%);
+  background-size: 50px 50px;
 }
 
 .react-transform-wrapper {
@@ -26,6 +26,15 @@
 }
 
 .react-transform-component {
-  width: 100% !important;
-  height: 100% !important;
+  width: 150% !important;
+  height: 150% !important;
+}
+
+.add-pawn-button {
+  position: absolute;
+  top: 91%;
+  left: 93%;
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
 }

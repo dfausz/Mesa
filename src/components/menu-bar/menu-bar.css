@@ -1,0 +1,51 @@
+.hidden {
+    display: none;
+}
+
+.menu-bar{
+    background-color: navy;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px 12px;
+}
+
+.primary-menu-items {
+    flex: 1;
+}
+
+.window-menu-items {
+}
+
+.sub-menu {
+    background-color: navy;
+    display: flex;
+    flex-direction: row;
+}
+
+.menu-content {
+    position: absolute;
+    background-color: navy;
+    z-index: 1;
+    padding: 4px 12px;
+}
+
+.menu-button{
+    background-color: navy;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    padding: 8px 12px;
+}
+
+.menu-button:hover {
+    filter: brightness(140%);
+}
+
+.menu-button:active {
+    filter: brightness(85%);
+}

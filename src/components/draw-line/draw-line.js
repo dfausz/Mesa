@@ -34,6 +34,10 @@ function DrawLine(props) {
         
         return Math.atan2((y1 - y2), (x1 - x2)) * (180 / Math.PI);
     }
+
+    function roundUp(number) {
+        return Math.round(number / 5) * 5;
+    }
     
     return (
         <>
@@ -45,7 +49,7 @@ function DrawLine(props) {
                 }} />
             <div className={"length-label " + (props.showLine ? "" : "hidden")} 
                 style={{top: props.endPoint.y, left:props.endPoint.x}}>
-                {Math.round(getLength()/10) + "ft"}
+                {roundUp(getLength()/10) + "ft"}
             </div>
         </>
     )

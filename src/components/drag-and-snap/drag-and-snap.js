@@ -6,50 +6,30 @@ import { GetPawnDiameter } from '../../helpers/pawnHelper';
 import { useSelector } from 'react-redux';
 
 export default function DragAndSnap(props) {
-    var bonusOffset;
-    switch(props.size){
-        case "tiny":
-            bonusOffset = 11; break;
-            default:
-        case "small":
-        case "medium":
-            bonusOffset = 2; break;
-        case "large":
-            bonusOffset = 9; break;
-        case "huge":
-            bonusOffset = 14; break;
-        case "gargantuan":
-            bonusOffset = 19; break;
+    const getBonusOffset = () => {
+        switch(props.size){
+            case "tiny":
+                return 11;
+                default:
+            case "small":
+            case "medium":
+                return 2;
+            case "large":
+                return 7.5;
+            case "huge":
+                return 14;
+            case "gargantuan":
+                return 19;
+        }
     }
 
     const scale = useSelector((state) => state.transform.scale) 
 
-    const [position, setPosition] = useState({x: bonusOffset, y: bonusOffset});
     const [startPoint, setStartPoint] = useState({x: 0, y: 0});
     const [endPoint, setEndPoint] = useState({x: 0, y: 0});
     const [showLine, setShowLine] = useState(false);
-
-    function getCoordinates(event) {
-        var coordinatesString = event.target.style.transform.replaceAll(/translate\(|\)|px/gi, "").split(", ");
-        return {x: Number(coordinatesString[0]), y: Number(coordinatesString[1])};
-    }
     
-    function getNumber(coordinate) {
-        var returnVal = 0;
-        if((coordinate % 50) > 25) {
-            returnVal = 50 - coordinate % 50 + bonusOffset;
-        }
-        else {
-            returnVal = 0 - (coordinate % 50) + bonusOffset;
-        }
-        return returnVal;
-    }
-    
-    function onStop(e) {
-        var coordinates = getCoordinates(e);
-        var newX = coordinates.x + getNumber(coordinates.x);
-        var newY = coordinates.y + getNumber(coordinates.y);
-        setPosition({x: newX, y: newY});
+    function onStop() {
         setShowLine(false);
     }
 
@@ -67,7 +47,8 @@ export default function DragAndSnap(props) {
 
     return (
         <>
-            <Draggable onStart={onStart} onDrag={onDrag} onStop={onStop} position={position} scale={scale}>
+            <Draggable defaultPosition={{x: getBonusOffset(), y: getBonusOffset()}} grid={[50 * scale, 50 * scale]} onStart={onStart} 
+                       onDrag={onDrag} onStop={onStop} scale={scale}>
                 {props.children}
             </Draggable>
             <DrawLine startPoint={startPoint} endPoint={endPoint} showLine={showLine} />
