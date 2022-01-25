@@ -1,10 +1,23 @@
 .pawn {
     position: absolute;
-    background-color: blue;
     opacity: 0.85;
-    background-image: url("./orc-head.png");
-    border-radius: 100%;
     filter: drop-shadow(0 0 0.25rem black);
+}
+
+.absolute-full {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.pawn-background-color {
+    background-color: navy;
+    border-radius: 100%;
+}
+
+.pawn-image {
+    opacity: 0.75;
+    background: no-repeat center/90% url(./orc-head.png);
 }
 
 hr {

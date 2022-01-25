@@ -9,17 +9,17 @@ export default function DragAndSnap(props) {
     const getBonusOffset = () => {
         switch(props.size){
             case "tiny":
-                return 11;
-                default:
+                return 15;
+            default:
             case "small":
             case "medium":
-                return 2;
+                return 5;
             case "large":
-                return 7.5;
+                return 10;
             case "huge":
-                return 14;
+                return 15;
             case "gargantuan":
-                return 19;
+                return 20;
         }
     }
 
