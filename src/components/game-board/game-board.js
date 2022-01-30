@@ -9,8 +9,15 @@ import './game-board.css';
 import Emitter from '../../helpers/eventEmitter';
 
 function GameBoard() {
-  const newPawn = (size, key) => <Pawn key={key} size={size} onRemove={() => removePawn(key)} />;
-  const [pawns, setPawns] = useState([newPawn("medium", uuidv4())]);
+  const newPawn = (size, key) => <Pawn key={key} size={size} type="npc-pawn" image="pawn-image" onRemove={() => removePawn(key)} />;
+  const playerPawn = (player) => <Pawn key={`player-pawn-${player}`} type="player-pawn" size="medium" image={`pawn-image-${player}`} onRemove={() => removePawn(`player-pawn-${player}`)} />
+  const [pawns, setPawns] = useState([
+    playerPawn("cressida"),
+    playerPawn("hal"),
+    playerPawn("o"),
+    playerPawn("nulf"),
+    playerPawn("phil")
+  ]);
 
   useEffect(() => {
     Emitter.removeAllListeners("create-pawn");

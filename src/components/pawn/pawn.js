@@ -20,10 +20,10 @@ function Pawn(props) {
 
   return (
     <DragAndSnap size={props.size} scale={props.scale}>
-        <div className="pawn" onMouseOver={disableBackgroundDrag} onMouseOut={enableBackgroundDrag} 
+        <div className={`pawn ${props.type}`} onMouseOver={disableBackgroundDrag} onMouseOut={enableBackgroundDrag} 
              style={{height: pawnDiameter + "px", width: pawnDiameter + "px"}} onContextMenu={clicked}>
           <div className="pawn-background-color absolute-full" />
-          <div className="pawn-image absolute-full" />
+          <div className={`${props.image} absolute-full`}  />
         </div>
     </DragAndSnap>
   );

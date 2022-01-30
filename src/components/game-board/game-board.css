@@ -3,12 +3,6 @@
   width: 100%;
 }
 
-.test {
-  height: 60px;
-  width: 60px;
-  background-color: red;
-}
-
 .grid {
   height: 100%;
   width: 100%;
@@ -28,13 +22,4 @@
 .react-transform-component {
   width: 150% !important;
   height: 150% !important;
-}
-
-.add-pawn-button {
-  position: absolute;
-  top: 91%;
-  left: 93%;
-  height: 50px;
-  width: 50px;
-  border-radius: 100%;
 }
