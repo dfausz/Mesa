@@ -23,3 +23,9 @@
   width: 150% !important;
   height: 150% !important;
 }
+
+.game-board-context {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}

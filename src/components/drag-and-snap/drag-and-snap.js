@@ -25,29 +25,58 @@ export default function DragAndSnap(props) {
 
     const scale = useSelector((state) => state.transform.scale) 
 
-    const [startPoint, setStartPoint] = useState({x: 0, y: 0});
-    const [endPoint, setEndPoint] = useState({x: 0, y: 0});
+    const [startPoint, setStartPoint] = useState(getRadiusAjustedStoredPosition() ?? {x: 0, y: 0});
+    const [endPoint, setEndPoint] = useState(getRadiusAjustedStoredPosition() ?? {x: 0, y: 0});
     const [showLine, setShowLine] = useState(false);
+
+    function getStoredPosition() {
+        let pawns = JSON.parse(localStorage.getItem(props.type + '-pawns'));
+        if(pawns && pawns[props.pawnId]) {
+            return pawns[props.pawnId].position
+        }
+        else {
+            return null
+        }
+    }
+
+    function getRadiusAjustedStoredPosition() {
+        let position = getStoredPosition();
+        if(position == null) return {x: 0, y: 0}
+        let pawnRadius = GetPawnDiameter(props.size) / 2;
+        return {x: position.x + pawnRadius, y: position.y + pawnRadius};
+    }
+    
+    function savePosition(position) {
+        let pawns = JSON.parse(localStorage.getItem(props.type + '-pawns'));
+        if(!pawns) pawns = {};
+        if(!pawns[props.pawnId]) pawns[props.pawnId] = {};
+        pawns[props.pawnId].position = position;
+        pawns[props.pawnId].size = props.size;
+        localStorage.setItem(props.type + '-pawns', JSON.stringify(pawns));
+    }
     
     function onStop() {
         setShowLine(false);
+        var pawnDiameter = GetPawnDiameter(props.size);
+        var radius = pawnDiameter / 2;
+        savePosition({x: endPoint.x - radius, y: endPoint.y - radius});
     }
 
     function onStart(_, target){
         var pawnRadius = GetPawnDiameter(props.size) / 2;
         setStartPoint({x: target.x + pawnRadius, y: target.y + pawnRadius});
-        setShowLine(true);
     }
     
     function onDrag(_, target) {
         var pawnDiameter = GetPawnDiameter(props.size);
         var radius = pawnDiameter / 2;
         setEndPoint({x: target.x + radius, y: target.y + radius});
+        if(!showLine) setShowLine(true);
     }
 
     return (
         <>
-            <Draggable defaultPosition={{x: getBonusOffset(), y: getBonusOffset()}} grid={[50 * scale, 50 * scale]} onStart={onStart} 
+            <Draggable defaultPosition={getStoredPosition() ?? {x: getBonusOffset(), y: getBonusOffset()}} grid={[50 * scale, 50 * scale]} onStart={onStart} 
                        onDrag={onDrag} onStop={onStop} scale={scale}>
                 {props.children}
             </Draggable>

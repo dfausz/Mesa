@@ -1,9 +1,10 @@
 import './menu-bar.css';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Emitter from '../../helpers/eventEmitter';
 const electron = window.require('electron');
 
 function MenuBar() {
+    const pawnsMenuRef = useRef();
     const [pawnsMenuOpen, setPawnsMenuOpen] = useState(false);
 
     electron.ipcRenderer.on("file-selected", (...all) => console.log(all));
@@ -17,11 +18,15 @@ function MenuBar() {
         electron.ipcRenderer.invoke("show-file-dialog");
     }
 
+    useEffect(() => window.addEventListener('click', event => {
+        if(pawnsMenuRef.current && !pawnsMenuRef.current.contains(event.target)) { setPawnsMenuOpen(false) }
+    }));
+
     return (
         <div className="menu-bar">
             <div className="sub-menu primary-menu-items">
-                <div className="menu-button upload-file" onClick={showFileDialog}>Upload</div>
-                <div className="pawns-menu">
+                <div className="menu-button" onClick={showFileDialog}>Upload</div>
+                <div className="pawns-menu" ref={pawnsMenuRef}>
                     <button className="menu-button" onClick={() => {setPawnsMenuOpen(!pawnsMenuOpen)}}>Pawns</button>
                     <div className={"menu-content " + (pawnsMenuOpen ? "" : "hidden")} >
                         <button className="menu-button" onClick={() => createPawn("tiny")}>Tiny</button>

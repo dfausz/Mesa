@@ -7,6 +7,14 @@
     opacity: 0.85;
 }
 
+.pawn-halo {
+    padding: 300px;
+    filter: drop-shadow(0 0 0.15rem lightblue);
+    transform: translate(-300px, -300px);
+    border: 1px solid #ffffffbb;
+    border-radius: 100%;
+}
+
 .absolute-full {
     position: absolute;
     height: 100%;
