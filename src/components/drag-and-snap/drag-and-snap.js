@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 
 export default function DragAndSnap(props) {
     const getBonusOffset = () => {
-        switch(props.size){
+        switch(props.info.size){
             case "tiny":
                 return 15;
             default:
@@ -42,7 +42,7 @@ export default function DragAndSnap(props) {
     function getRadiusAjustedStoredPosition() {
         let position = getStoredPosition();
         if(position == null) return {x: 0, y: 0}
-        let pawnRadius = GetPawnDiameter(props.size) / 2;
+        let pawnRadius = GetPawnDiameter(props.info.size) / 2;
         return {x: position.x + pawnRadius, y: position.y + pawnRadius};
     }
     
@@ -51,24 +51,24 @@ export default function DragAndSnap(props) {
         if(!pawns) pawns = {};
         if(!pawns[props.pawnId]) pawns[props.pawnId] = {};
         pawns[props.pawnId].position = position;
-        pawns[props.pawnId].size = props.size;
+        pawns[props.pawnId].info = props.info;
         localStorage.setItem(props.type + '-pawns', JSON.stringify(pawns));
     }
     
     function onStop() {
         setShowLine(false);
-        var pawnDiameter = GetPawnDiameter(props.size);
+        var pawnDiameter = GetPawnDiameter(props.info.size);
         var radius = pawnDiameter / 2;
         savePosition({x: endPoint.x - radius, y: endPoint.y - radius});
     }
 
     function onStart(_, target){
-        var pawnRadius = GetPawnDiameter(props.size) / 2;
+        var pawnRadius = GetPawnDiameter(props.info.size) / 2;
         setStartPoint({x: target.x + pawnRadius, y: target.y + pawnRadius});
     }
     
     function onDrag(_, target) {
-        var pawnDiameter = GetPawnDiameter(props.size);
+        var pawnDiameter = GetPawnDiameter(props.info.size);
         var radius = pawnDiameter / 2;
         setEndPoint({x: target.x + radius, y: target.y + radius});
         if(!showLine) setShowLine(true);

@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 
 const { app, BrowserWindow, ipcMain, ipcRenderer, dialog, protocol } = require('electron');
 const isDev = require('electron-is-dev');
@@ -29,27 +30,21 @@ function createWindow() {
     }
   });
 
-  protocol.registerFileProtocol('background', (request, callback) => {
-    const url = request.url.substr(9, request.url.length - 10)
-    callback({path: app.getPath('userData') + '/backgrounds/' + url})
-    }, (error) => {
-      if (error) console.error('Failed to register protocol')
-    }
-  );
-
-  ipcMain.handle('show-file-dialog', () => {
-    dialog.showOpenDialog({properties: ["createDirectory"]}).then((files) => {
-      if(!files.canceled){
-        const dir = path.join(app.getPath("userData"), 'backgrounds');
-        if (!existsSync(dir)) {
-          mkdirSync(dir);
-        }
+  ipcMain.on("uploadBackground", (event, uploadName) => {
+    const result = dialog.showOpenDialog({
+      properties: ["openFile"],
+      filters: [{ name: "Images", extensions: ["png","jpg","jpeg"] }]
+    });
   
-        copyFile(files.filePaths[0], path.join(app.getPath("userData"), 'backgrounds', 'background.jpg'), () => {});
-
-        // todo: figure out a way to do dynamic file sharing
-        // var filename = path.parse(files.filePaths[0]).base;
-        // win.webContents.send('file-selected', path.join(app.getPath("userData"), 'backgrounds', 'background.jpg'));
+    result.then(({canceled, filePaths}) => {
+      if(!canceled){
+        try{
+          const base64 = fs.readFileSync(filePaths[0]).toString('base64');
+          win.webContents.send("chosen-background", base64, uploadName);
+        }
+        catch(ex) {
+          console.log(ex);
+        }
       }
     });
   });

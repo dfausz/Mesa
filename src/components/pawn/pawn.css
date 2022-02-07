@@ -8,9 +8,7 @@
 }
 
 .pawn-halo {
-    padding: 300px;
     filter: drop-shadow(0 0 0.15rem lightblue);
-    transform: translate(-300px, -300px);
     border: 1px solid #ffffffbb;
     border-radius: 100%;
 }
@@ -22,7 +20,6 @@
 }
 
 .pawn-background-color {
-    background-color: navy;
     border-radius: 100%;
 }
 
@@ -31,27 +28,27 @@
     background: no-repeat center/90% url(./images/orc-head.png);
 }
 
-.pawn-image-cressida {
+.pawn-image-Cressida {
     border-radius: 100%;
     background: no-repeat center/110% url(./images/CressidaCropped.jpg);
 }
 
-.pawn-image-hal {
+.pawn-image-Hal {
     border-radius: 100%;
     background: no-repeat center/110% url(./images/Hal_new.jpg);
 }
 
-.pawn-image-o {
+.pawn-image-O {
     border-radius: 100%;
     background: no-repeat center/110% url(./images/OrfandrusCrop.jpg);
 }
 
-.pawn-image-nulf {
+.pawn-image-Nulf {
     border-radius: 100%;
     background: no-repeat center/110% url(./images/nulf.jpg);
 }
 
-.pawn-image-phil {
+.pawn-image-Phil {
     border-radius: 100%;
     background: no-repeat center/110% url(./images/phil.jpg);
 }
@@ -63,4 +60,10 @@ hr {
     background-color: #fff;
     height: 1px;
     width: 50%;
+}
+
+.pawn-name {
+    text-align: center;
+    font-size: larger;
+    filter: drop-shadow(0 0 0.25rem black);
 }

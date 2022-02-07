@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+
+.title-script {
+  font-family: 'Kaushan Script', cursive;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,6 +11,34 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* CSS HEX */
+  --bone: #dfdeceff;
+  --nickel: #727c7eff;
+  --black-chocolate: #1d1e19ff;
+  --rust: #a44200ff;
+  --fulvous: #d98324ff;
+
+  /* CSS HEX */
+  --bone: #dfdeceff;
+  --nickel: #727c7eff;
+  --black-chocolate: #1d1e19ff;
+  --ruby-red: #a31621ff;
+  --flame: #ee5622ff;
+
+  /* CSS HEX */
+  --ash-gray: #AFBDB8ff;
+  --bistre: #2E1E14ff;
+  --seashell: #FFF6F2ff;
+  --persian-plum: #652118ff;
+  --army-green: #4F4914ff;
+  --pullman-brown-ups-brown: #5D3A12ff;
+
+  --purple: #312229;
+  --red: #54101d;
+  --blue: #47596f;
+  --gold: #b18653;
+  --tan: #d5c5ae;
 }
 
 code {

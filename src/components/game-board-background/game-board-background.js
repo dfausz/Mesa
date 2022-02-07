@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import './game-board-background.css';
+import BackgroundWrapper from './background-wrapper';
+import BackgroundModel from './background-model';
 
 function GameBoardBackground() {
-  let initialTranslate = {x: 0, y: 0};
-  let initialScale = 1.0;
-
-  if(hasState()){
-    let state = getState();
-    initialTranslate = state.translate;
-    initialScale = state.scale;
-  }
-
-  const [backgroundTranslate, setBackgroundTranslate] = useState(initialTranslate);
-  const [backgroundScale, setBackgroundScale] = useState(initialScale);
+  let background = JSON.parse(localStorage.getItem('current-background')) ?? new BackgroundModel();
+  const [backgroundTranslate, setBackgroundTranslate] = useState(background.translate);
+  const [backgroundScale, setBackgroundScale] = useState(background.scale);
+  const [imageSource, setImageSource] = useState(background.image);
   
   window.onkeydown = (event) => {
     if(event.ctrlKey && event.shiftKey) {
@@ -22,18 +17,6 @@ function GameBoardBackground() {
       shiftBackground(event);
     }
   };
-
-  function hasState() {
-    return localStorage.getItem('game-board') != null;
-  }
-
-  function getState() {
-    return JSON.parse(localStorage.getItem('game-board'));
-  }
-  
-  function saveState() {
-    localStorage.setItem('game-board', JSON.stringify({translate: backgroundTranslate, scale: backgroundScale}))
-  }
 
   function scaleBackground(event) {
     switch(event.key){
@@ -45,8 +28,6 @@ function GameBoardBackground() {
       case "ArrowLeft":
         setBackgroundScale(backgroundScale - 0.01);
     }
-
-    saveState();
   }
 
   function shiftBackground(event) {
@@ -64,14 +45,15 @@ function GameBoardBackground() {
         setBackgroundTranslate({x: backgroundTranslate.x, y: backgroundTranslate.y + 1});
         break;
     }
-
-    saveState();
   }
 
   return (
-    <img src={require('./clearing.jpg')} 
-          style={{transform: `scale(${backgroundScale}) translate(${backgroundTranslate.x}px,${backgroundTranslate.y}px)`}} 
-          className="game-board-background" />
+    <BackgroundWrapper setBackground={setImageSource} scale={{get: backgroundScale, set: setBackgroundScale}} 
+                       translate={{get: backgroundTranslate, set: setBackgroundTranslate}}>
+      <img src={imageSource} 
+            style={{transform: `scale(${backgroundScale}) translate(${backgroundTranslate.x}px,${backgroundTranslate.y}px)`}} 
+            className="game-board-background" />
+    </BackgroundWrapper>
   );
 }
 

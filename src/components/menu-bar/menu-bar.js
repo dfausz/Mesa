@@ -1,50 +1,59 @@
 import './menu-bar.css';
-import { useState, useRef, useEffect } from 'react';
+import { AppBar, Toolbar, IconButton, Button, Drawer, List, ListItem, ListItemText, Box, ListItemIcon, Typography, Icon, Divider } from "@mui/material"
+import { useRef, useState } from 'react';
 import Emitter from '../../helpers/eventEmitter';
+import { pink } from '@mui/material/colors';
 const electron = window.require('electron');
 
 function MenuBar() {
     const pawnsMenuRef = useRef();
-    const [pawnsMenuOpen, setPawnsMenuOpen] = useState(false);
+
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     electron.ipcRenderer.on("file-selected", (...all) => console.log(all));
-    
-    function createPawn(size) {
-        Emitter.emit('create-pawn', size);
-        setPawnsMenuOpen(false);
-    }
 
-    function showFileDialog(){
+    function showFileDialog() {
         electron.ipcRenderer.invoke("show-file-dialog");
     }
 
-    useEffect(() => window.addEventListener('click', event => {
-        if(pawnsMenuRef.current && !pawnsMenuRef.current.contains(event.target)) { setPawnsMenuOpen(false) }
-    }));
+    function closeApp() {
+        Emitter.emit('save-app-state');
+        electron.ipcRenderer.invoke("window-all-closed");
+    }
 
     return (
-        <div className="menu-bar">
-            <div className="sub-menu primary-menu-items">
-                <div className="menu-button" onClick={showFileDialog}>Upload</div>
-                <div className="pawns-menu" ref={pawnsMenuRef}>
-                    <button className="menu-button" onClick={() => {setPawnsMenuOpen(!pawnsMenuOpen)}}>Pawns</button>
-                    <div className={"menu-content " + (pawnsMenuOpen ? "" : "hidden")} >
-                        <button className="menu-button" onClick={() => createPawn("tiny")}>Tiny</button>
-                        <button className="menu-button" onClick={() => createPawn("small")}>Small</button>
-                        <button className="menu-button" onClick={() => createPawn("medium")}>Medium</button>
-                        <button className="menu-button" onClick={() => createPawn("large")}>Large</button>
-                        <button className="menu-button" onClick={() => createPawn("huge")}>Huge</button>
-                        <button className="menu-button" onClick={() => createPawn("gargantuan")}>Gargantuan</button>
-                    </div>
-                </div>
-            </div>
-            <div className="draggable-app-region">&nbsp;</div>
-            <div className="sub-menu window-menu-items">
-                <button className="menu-button material-icons" onClick={() => electron.ipcRenderer.invoke("window-minimize")}>minimize</button>
-                <button className="menu-button material-icons-outlined" onClick={() => electron.ipcRenderer.invoke("window-toggle-maximize")}>square</button>
-                <button className="menu-button material-icons" onClick={() => electron.ipcRenderer.invoke("window-all-closed")}>close</button>
-            </div>
-        </div>
+        <>
+            <AppBar position="static">
+                <Toolbar className="menu-bar-toolbar" variant="dense">
+                    <IconButton onClick={() => setDrawerOpen(true)} className="material-icons" size="medium" edge="start" color="inherit">menu</IconButton>
+                    <Typography variant="h6" component="div" sx={{marginLeft: 2}}>Mesa</Typography>
+                    <div className="draggable-app-region">&nbsp;</div>
+                    <IconButton className="material-icons" size="small" color="inherit" onClick={() => electron.ipcRenderer.invoke("window-minimize")}>minimize</IconButton>
+                    <IconButton className="material-icons-outlined" size="small" onClick={() => electron.ipcRenderer.invoke("window-toggle-maximize")} color="inherit">square</IconButton>
+                    <IconButton className="material-icons" size="small" color="inherit" onClick={closeApp}>close</IconButton>
+                </Toolbar>
+            </AppBar>
+            <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+                <Box className="app-drawer" sx={{width: 250}}>
+                    <Box className="drawer-header-container">
+                        <Icon className="material-icons-outlined" sx={{fontSize: "56pt", color:"#ffffff33"}}>
+                            table_restaurant
+                        </Icon>
+                    </Box>
+                    <Divider sx={{width: "100%"}} />
+                    <List>
+                        <ListItem button onClick={() => { Emitter.emit('open-backgrounds-dialog'); setDrawerOpen(false); }}>
+                            <ListItemIcon className="material-icons-outlined">image</ListItemIcon>
+                            <ListItemText primary="Background" />
+                        </ListItem>
+                        <ListItem button onClick={() => { Emitter.emit('open-new-pawn-dialog'); setDrawerOpen(false); }}>
+                            <ListItemIcon className="material-icons-outlined">person</ListItemIcon>
+                            <ListItemText primary="Pawns" />
+                        </ListItem>
+                    </List>
+                </Box>
+            </Drawer>
+        </>
     );
   }
   

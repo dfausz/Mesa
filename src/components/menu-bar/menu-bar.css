@@ -1,50 +1,23 @@
-.hidden {
-    display: none;
-}
-
-.menu-bar{
-    background-color: navy;
-    color: white;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0px 12px;
-}
-
 .draggable-app-region {
     flex: 1;
     -webkit-app-region: drag;
 }
 
-.sub-menu {
-    background-color: navy;
+.drawer-header-container {
     display: flex;
-    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 40px;
+    margin: 40px;
+    border-radius: 100%;
+    border: 2px solid #FFFFFF20;
 }
 
-.menu-content {
-    position: absolute;
-    background-color: navy;
-    z-index: 1;
-    padding: 4px 12px;
+.app-drawer {
+    height: 100%;
 }
 
-.menu-button{
-    background-color: navy;
-    border: none;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    padding: 8px 12px;
-    cursor: pointer;
-}
-
-.menu-button:hover {
-    filter: brightness(140%);
-}
-
-.menu-button:active {
-    filter: brightness(85%);
+.menu-bar-toolbar {
+    background-color: #47596f;
 }

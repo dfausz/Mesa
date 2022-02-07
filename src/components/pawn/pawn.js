@@ -9,13 +9,24 @@ import { useState } from 'react';
 /** @param {{size: "tiny"|"small"|"medium"|"large"|"huge"|"gargantuan"]}} props  */
 function Pawn(props) {
   const [isHaloShown, setIsHaloShown] = useState(false);
-
+  const [hover, setHover] = useState(false);
+  
   const dispatch = useDispatch();
+  
+  const pawnDiameter = GetPawnDiameter(props.info.size);
+  const pawnRadius = pawnDiameter / 2;
+  const pawnSpeed = 30;
+  const haloSize = pawnSpeed * 10;
 
-  const pawnDiameter = GetPawnDiameter(props.size);
+  function disableBackgroundDrag() { 
+    dispatch(setDisableTransform(true));
+    setHover(true);
+  };
 
-  const disableBackgroundDrag = () => { dispatch(setDisableTransform(true)) };
-  const enableBackgroundDrag = () => { dispatch(setDisableTransform(false)) };
+  function enableBackgroundDrag() { 
+    dispatch(setDisableTransform(false));
+    setHover(false);
+  };
 
   function clicked() {
     props.onRemove(props)
@@ -28,13 +39,19 @@ function Pawn(props) {
   }
 
   return (
-    <DragAndSnap pawnId={props.pawnId} type={props.type} size={props.size} scale={props.scale}>
+    <DragAndSnap pawnId={props.pawnId} type={props.type} info={props.info}>
       <div className={`pawn ${props.type}`} onClick={toggleHalo} 
           onMouseOver={disableBackgroundDrag} onMouseOut={enableBackgroundDrag} 
           style={{height: pawnDiameter + "px", width: pawnDiameter + "px"}} onContextMenu={clicked}>
-        <div className="pawn-background-color absolute-full" />
+        <div className="pawn-background-color absolute-full" style={{backgroundColor: props.info.color ?? 'blue'}} />
         <div className={`${props.image} absolute-full`}  />
-        <div className={(isHaloShown ? "" : "hidden ") + "pawn-halo absolute-full"}>&nbsp;</div>
+        <div className={`pawn-name absolute-full ${hover ? "" : "hidden "}`} style={{transform:`translate(0, ${pawnDiameter + 8}px)`}}>
+          {props.info.name}
+        </div>
+        <div className={(isHaloShown ? "" : "hidden ") + "pawn-halo absolute-full"}
+            style={{padding: `${haloSize}px`, transform: `translate(-${haloSize - pawnRadius}px, -${haloSize - pawnRadius}px)`}}>
+            &nbsp;
+        </div>
       </div>
     </DragAndSnap>
   );
